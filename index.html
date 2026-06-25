@@ -1,0 +1,2643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <title>小学英语单词练习</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --paper: #ffffff;
+      --ink: #17324d;
+      --muted: #5c6b7a;
+      --line: #dbe4ee;
+      --teal: #0f766e;
+      --teal-dark: #0b514b;
+      --sky: #2f6fca;
+      --coral: #df5a47;
+      --sun: #e7aa25;
+      --leaf: #3f8f58;
+      --danger: #b93425;
+      --ok: #18704e;
+      --soft-sky: #eaf3ff;
+      --soft-coral: #fff1ee;
+      --soft-sun: #fff8df;
+      --soft-leaf: #ebf7ee;
+      --shadow: 0 14px 32px rgba(23, 50, 77, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 28px;
+    }
+
+    .hero {
+      min-height: 218px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background-image:
+        linear-gradient(90deg, rgba(15, 63, 76, 0.82), rgba(15, 63, 76, 0.44), rgba(15, 63, 76, 0.05)),
+        url("./assets/word-classroom.png");
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(560px, 100%);
+      padding: 26px;
+      color: #ffffff;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      line-height: 1.08;
+    }
+
+    .hero-copy {
+      margin: 12px 0 18px;
+      max-width: 440px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      width: min(420px, 100%);
+    }
+
+    .name-row input {
+      min-width: 0;
+      flex: 1;
+      height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 0 12px;
+      outline: none;
+    }
+
+    .name-row input:focus {
+      border-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.22);
+    }
+
+    .btn {
+      min-height: 42px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      color: #ffffff;
+      background: var(--teal);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(23, 50, 77, 0.16);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      background: #edf3f5;
+    }
+
+    .btn.warning {
+      background: var(--coral);
+    }
+
+    .btn.ghost {
+      color: var(--teal-dark);
+      background: #e8f3f1;
+    }
+
+    .btn[disabled] {
+      cursor: not-allowed;
+      opacity: 0.58;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      flex: none;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr) 290px;
+      gap: 16px;
+      align-items: start;
+      margin-top: 16px;
+    }
+
+    .page {
+      margin-top: 16px;
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .page-head h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .home-card {
+      min-height: 138px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(23, 50, 77, 0.05);
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+
+    .home-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .home-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .home-card.primary {
+      background: #e8f3f1;
+      border-color: #a9cfca;
+    }
+
+    .home-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .setup-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .tool-panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 8px 18px rgba(23, 50, 77, 0.05);
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .panel-note {
+      margin: -4px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .selector-block {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .selector-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+
+    .selector-heading strong {
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .unit-list,
+    .book-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .unit-option,
+    .book-option {
+      position: relative;
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      align-items: center;
+      gap: 9px;
+      min-height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fbfdff;
+      cursor: pointer;
+    }
+
+    .unit-option input,
+    .book-option input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--teal);
+      margin: 0;
+    }
+
+    .unit-name,
+    .book-name {
+      font-weight: 850;
+    }
+
+    .unit-meta,
+    .book-meta {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .unit-count,
+    .book-count {
+      min-width: 46px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 850;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: #edf3f7;
+    }
+
+    .book-count {
+      background: #e8f3f1;
+      color: var(--teal-dark);
+    }
+
+    .unit-option[data-color="coral"] .unit-count {
+      background: var(--soft-coral);
+      color: var(--danger);
+    }
+
+    .unit-option[data-color="sun"] .unit-count {
+      background: var(--soft-sun);
+      color: #7a5200;
+    }
+
+    .unit-option[data-color="leaf"] .unit-count {
+      background: var(--soft-leaf);
+      color: var(--ok);
+    }
+
+    .unit-option[data-color="sky"] .unit-count {
+      background: var(--soft-sky);
+      color: var(--sky);
+    }
+
+    .quick-actions,
+    .mode-grid,
+    .practice-actions {
+      display: grid;
+      gap: 8px;
+    }
+
+    .quick-actions {
+      grid-template-columns: 1fr 1fr;
+      margin: 12px 0 16px;
+    }
+
+    .mode-grid {
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 14px;
+    }
+
+    .mode-option {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fbfdff;
+      cursor: pointer;
+    }
+
+    .mode-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mode-title {
+      display: block;
+      font-weight: 850;
+      margin-bottom: 3px;
+    }
+
+    .mode-copy {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .mode-option:has(input:checked) {
+      border-color: var(--teal);
+      background: #eaf7f5;
+      box-shadow: inset 0 0 0 1px var(--teal);
+    }
+
+    .review-banner {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 12px;
+      border: 1px solid #f3c4ba;
+      border-radius: 8px;
+      background: var(--soft-coral);
+      color: var(--danger);
+    }
+
+    .review-banner strong {
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .review-banner span {
+      color: #854033;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .practice-surface {
+      min-height: 590px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 14px;
+    }
+
+    .practice-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      border-radius: 999px;
+      padding: 0 10px;
+      color: var(--teal-dark);
+      background: #e8f3f1;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .progress-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .bar {
+      width: 128px;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf2;
+    }
+
+    .bar span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--teal);
+      transition: width 0.2s ease;
+    }
+
+    .empty-state {
+      min-height: 460px;
+      border: 1px dashed #b9c7d6;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      background: #fbfdff;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+
+    .empty-state p {
+      max-width: 420px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .quiz-body {
+      display: grid;
+      gap: 14px;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+      padding: 22px;
+      min-height: 168px;
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .prompt-word {
+      font-size: 42px;
+      line-height: 1.08;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    .prompt-cn {
+      font-size: 30px;
+      line-height: 1.22;
+      font-weight: 900;
+    }
+
+    .prompt-sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .sentence {
+      font-size: 20px;
+      line-height: 1.6;
+      font-weight: 750;
+      color: #25455f;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .option-btn {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 66px;
+      padding: 12px;
+      text-align: left;
+      background: #ffffff;
+      color: var(--ink);
+      font-weight: 850;
+      line-height: 1.38;
+    }
+
+    .option-btn:hover {
+      border-color: var(--sky);
+      background: var(--soft-sky);
+    }
+
+    .option-btn.correct {
+      border-color: var(--ok);
+      background: #e7f6ec;
+      color: var(--ok);
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: #fff0ec;
+      color: var(--danger);
+    }
+
+    .option-btn[disabled] {
+      cursor: default;
+    }
+
+    .spell-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 120px;
+      gap: 10px;
+    }
+
+    .spell-input {
+      height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 14px;
+      outline: none;
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    .spell-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .feedback {
+      min-height: 54px;
+      border-radius: 8px;
+      padding: 12px;
+      display: none;
+      align-items: center;
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .feedback.show {
+      display: flex;
+    }
+
+    .feedback.good {
+      color: var(--ok);
+      background: #e7f6ec;
+    }
+
+    .feedback.bad {
+      color: var(--danger);
+      background: #fff0ec;
+    }
+
+    .trainer-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .trainer-buttons .right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .stat-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdff;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--teal-dark);
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .mini-meter {
+      margin: 12px 0 16px;
+    }
+
+    .mini-meter label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+      margin-bottom: 7px;
+    }
+
+    .weak-list {
+      display: grid;
+      gap: 8px;
+      max-height: 252px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+
+    .weak-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px dashed var(--line);
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .weak-word {
+      font-weight: 900;
+    }
+
+    .weak-cn {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .mistake-count {
+      flex: none;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fff0ec;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .wrong-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      outline: none;
+      background: #fbfdff;
+    }
+
+    .search-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .wrong-full-list {
+      max-height: none;
+      overflow: visible;
+    }
+
+    .phrase-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .filter-select {
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      background: #fbfdff;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .filter-select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .phrase-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .phrase-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfdff;
+      display: grid;
+      gap: 8px;
+    }
+
+    .phrase-card strong {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .phrase-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .phrase-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .phrase-tag {
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #e8f3f1;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .chart-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(23, 50, 77, 0.05);
+    }
+
+    .chart-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .chart-card canvas {
+      display: block;
+      width: 100%;
+      height: 260px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend i {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .daily-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .daily-table th,
+    .daily-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .daily-table th {
+      color: var(--muted);
+      font-weight: 850;
+      background: #fbfdff;
+    }
+
+    .result-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      background: #fbfdff;
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-score {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--teal-dark);
+    }
+
+    .result-copy {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 300px minmax(0, 1fr);
+      }
+
+      .home-grid,
+      .home-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .setup-grid,
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topic-panel {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .mode-panel {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .practice-surface {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+      }
+
+      .side-panel {
+        grid-column: 1 / -1;
+        grid-row: 3;
+      }
+
+      .stat-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 10px;
+      }
+
+      .hero {
+        min-height: 204px;
+        background-position: 55% center;
+      }
+
+      .hero-content {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .hero-copy {
+        font-size: 14px;
+      }
+
+      .workspace,
+      .home-grid,
+      .home-summary,
+      .setup-grid,
+      .chart-grid,
+      .phrase-list,
+      .phrase-toolbar,
+      .mode-grid,
+      .option-grid,
+      .spell-row,
+      .stat-grid,
+      .wrong-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .page-head {
+        align-items: stretch;
+      }
+
+      .page-head .btn {
+        width: 100%;
+      }
+
+      .topic-panel {
+        grid-column: auto;
+        grid-row: auto;
+        order: 1;
+      }
+
+      .mode-panel {
+        grid-column: auto;
+        grid-row: auto;
+        order: 2;
+      }
+
+      .practice-surface {
+        grid-column: auto;
+        grid-row: auto;
+        order: 3;
+      }
+
+      .side-panel {
+        grid-column: auto;
+        grid-row: auto;
+        order: 4;
+      }
+
+      .prompt-word {
+        font-size: 34px;
+      }
+
+      .prompt-cn {
+        font-size: 26px;
+      }
+
+      .sentence {
+        font-size: 18px;
+      }
+
+      .trainer-buttons {
+        display: grid;
+      }
+
+      .trainer-buttons .right {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">小学英语单词练习</p>
+        <h1>单词小花园</h1>
+        <p class="hero-copy">人教版PEP三年级起点</p>
+        <div class="name-row">
+          <input id="learnerName" type="text" maxlength="16" autocomplete="off" placeholder="请输入用户名">
+          <button class="btn" id="saveNameBtn" type="button" aria-label="保存昵称">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 4v6h8V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            保存
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page home-page" id="homePage">
+        <div class="home-grid">
+          <button class="home-card primary" id="goSetupBtn" type="button">
+            <strong>开始复习</strong>
+            <span>选择课本、主题和题型，然后进入练习。</span>
+          </button>
+          <button class="home-card" id="goWrongBtn" type="button">
+            <strong>错题本</strong>
+            <span>查看所有错词，并按任意题型重练。</span>
+          </button>
+          <button class="home-card" id="goDataBtn" type="button">
+            <strong>学习数据</strong>
+            <span>查看每天练过的题型和单词数量。</span>
+          </button>
+          <button class="home-card" id="goPhraseBtn" type="button">
+            <strong>短语查表</strong>
+            <span>集中查看动词词组和介词短语。</span>
+          </button>
+          <button class="home-card" id="quickReviewBtn" type="button">
+            <strong>错词快练</strong>
+            <span>直接进入错词范围，再选择题型。</span>
+          </button>
+        </div>
+
+        <section class="tool-panel">
+          <h2 class="panel-title">今日概览</h2>
+          <div class="home-summary">
+            <div class="stat-box"><span class="stat-number" id="homeTodayWords">0</span><span class="stat-label">今日复习词</span></div>
+            <div class="stat-box"><span class="stat-number" id="homeTodayAttempts">0</span><span class="stat-label">今日练习题</span></div>
+            <div class="stat-box"><span class="stat-number" id="homeWeakCount">0</span><span class="stat-label">当前错词</span></div>
+            <div class="stat-box"><span class="stat-number" id="homeStreak">0</span><span class="stat-label">连续天数</span></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page setup-page hide" id="setupPage">
+        <div class="page-head">
+          <div>
+            <h2>复习设置</h2>
+            <p class="panel-note" id="selectedSummary">已选择 1 本书、2 个主题，共 24 个词。</p>
+          </div>
+          <button class="btn secondary" type="button" data-page="homePage">返回首页</button>
+        </div>
+
+        <div class="setup-grid">
+          <section class="tool-panel setup-panel topic-panel" aria-labelledby="setupTitle">
+            <h2 class="panel-title" id="setupTitle">选择范围</h2>
+            <p class="panel-note">可以只按课本选，也可以同时勾选主题，系统会从两个范围的交集中出题。</p>
+            <div class="selector-block">
+              <div class="selector-heading"><strong>按课本</strong></div>
+              <div class="quick-actions">
+                <button class="btn secondary" id="selectAllBooksBtn" type="button">全选课本</button>
+                <button class="btn secondary" id="clearBooksBtn" type="button">清空课本</button>
+              </div>
+              <div class="book-list" id="bookList"></div>
+            </div>
+            <div class="selector-block">
+              <div class="selector-heading"><strong>按用法主题</strong></div>
+              <div class="quick-actions">
+                <button class="btn secondary" id="selectAllBtn" type="button">全选主题</button>
+                <button class="btn secondary" id="clearUnitsBtn" type="button">清空主题</button>
+              </div>
+              <div class="unit-list" id="unitList"></div>
+            </div>
+          </section>
+
+          <section class="tool-panel setup-panel mode-panel" aria-labelledby="modeTitle">
+            <h2 class="panel-title" id="modeTitle">选择题型</h2>
+            <div class="review-banner hide" id="reviewBanner">
+              <strong>错词重练范围</strong>
+              <span id="reviewBannerText">已选错词，请选择题型后开始。</span>
+              <button class="btn secondary" id="cancelReviewBtn" type="button">退出错词范围</button>
+            </div>
+            <div class="mode-grid" id="modeGrid">
+              <label class="mode-option">
+                <input type="radio" name="mode" value="en_cn" checked>
+                <span class="mode-title">英译中</span>
+                <span class="mode-copy">看英文，选中文</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="cn_en">
+                <span class="mode-title">中译英</span>
+                <span class="mode-copy">看中文，选英文</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="listen">
+                <span class="mode-title">听力随机</span>
+                <span class="mode-copy">听音选中/英/拼写</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="spell">
+                <span class="mode-title">拼写小练</span>
+                <span class="mode-copy">看提示，拼单词</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="clue">
+                <span class="mode-title">猜词填空</span>
+                <span class="mode-copy">读英文解释，填单词</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="verb_form">
+                <span class="mode-title">动词变形</span>
+                <span class="mode-copy">三单/ing/过去式按比例练</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="noun_plural">
+                <span class="mode-title">名词复数</span>
+                <span class="mode-copy">看单数，写复数</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="number_form">
+                <span class="mode-title">数词变形</span>
+                <span class="mode-copy">基数词和序数词互写</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="phrase_cn">
+                <span class="mode-title">词组短语</span>
+                <span class="mode-copy">看短语，选中文</span>
+              </label>
+              <label class="mode-option">
+                <input type="radio" name="mode" value="phrase_spell">
+                <span class="mode-title">短语拼写</span>
+                <span class="mode-copy">看中文，写英文短语</span>
+              </label>
+            </div>
+            <div class="practice-actions">
+              <button class="btn" id="startBtn" type="button">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                开始练习
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page quiz-page hide" id="quizPage">
+        <section class="tool-panel practice-surface" aria-labelledby="practiceTitle">
+          <div class="practice-head">
+            <div>
+              <h2 class="panel-title" id="practiceTitle">开始练习</h2>
+              <p class="panel-note">答错的词会自动进入错题本。</p>
+            </div>
+            <span class="pill" id="sessionMode">英译中</span>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <div>
+              <strong>准备好了就开始</strong>
+              <p>先在复习设置页选择范围和题型。</p>
+            </div>
+          </div>
+
+          <div id="quizView" class="quiz-body hide">
+            <div class="practice-head">
+              <div class="progress-line">
+                <span id="progressText">1/1</span>
+                <div class="bar" aria-hidden="true"><span id="progressBar"></span></div>
+              </div>
+              <button class="btn ghost" id="speakBtn" type="button" aria-label="播放发音">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                发音
+              </button>
+            </div>
+
+            <div class="question">
+              <div id="promptMain" class="prompt-word"></div>
+              <div id="promptSub" class="prompt-sub"></div>
+              <div id="promptSentence" class="sentence"></div>
+            </div>
+
+            <div class="option-grid" id="optionGrid"></div>
+
+            <div class="spell-row hide" id="spellRow">
+              <input id="spellInput" class="spell-input" type="text" autocomplete="off" placeholder="输入英文单词">
+              <button class="btn" id="submitSpellBtn" type="button">提交</button>
+            </div>
+
+            <div id="feedback" class="feedback" role="status"></div>
+
+            <div class="trainer-buttons">
+              <button class="btn secondary" id="skipBtn" type="button">看答案</button>
+              <div class="right">
+                <button class="btn secondary" id="backHomeBtn" type="button">结束</button>
+                <button class="btn" id="nextBtn" type="button" disabled>下一题</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="resultView" class="result-box hide">
+            <div class="result-score" id="resultScore">0%</div>
+            <p class="result-copy" id="resultCopy"></p>
+            <div class="practice-actions">
+              <button class="btn" id="againBtn" type="button">再练一次</button>
+              <button class="btn ghost" id="reviewMistakesBtn" type="button">重练错词</button>
+              <button class="btn secondary" type="button" data-page="homePage">返回首页</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page phrase-page hide" id="phrasePage">
+        <div class="page-head">
+          <div>
+            <h2>短语查表</h2>
+            <p class="panel-note">按当前选择的课本和主题展示，也可以搜索英文或中文。</p>
+          </div>
+          <button class="btn secondary" type="button" data-page="homePage">返回首页</button>
+        </div>
+        <section class="tool-panel">
+          <div class="phrase-toolbar">
+            <input class="search-input" id="phraseSearch" type="text" placeholder="搜索短语或中文">
+            <select class="filter-select" id="phraseTypeFilter" aria-label="短语类型">
+              <option value="all">全部类型</option>
+              <option value="verb_phrase">动词词组</option>
+              <option value="prep_phrase">介词短语</option>
+              <option value="noun_phrase">名词短语</option>
+              <option value="phrase">常用表达</option>
+            </select>
+          </div>
+          <div class="phrase-list" id="phraseList"></div>
+        </section>
+      </section>
+
+      <section class="page wrong-page hide" id="wrongPage">
+        <div class="page-head">
+          <div>
+            <h2>错题本</h2>
+            <p class="panel-note">错得越多越靠前。答对三次后会从薄弱词里淡出。</p>
+          </div>
+          <button class="btn secondary" type="button" data-page="homePage">返回首页</button>
+        </div>
+        <section class="tool-panel">
+          <div class="wrong-toolbar">
+            <input class="search-input" id="wrongSearch" type="text" placeholder="搜索英文或中文">
+            <button class="btn warning" id="startWeakBtn" type="button">错词重练</button>
+          </div>
+          <div class="weak-list wrong-full-list" id="weakList"></div>
+        </section>
+      </section>
+
+      <section class="page data-page hide" id="dataPage">
+        <div class="page-head">
+          <div>
+            <h2>学习数据</h2>
+            <p class="panel-note">这里保留历史学习记录；每天复习单词按“去重后的单词数”统计，同一个词当天多次练习只算 1 个。</p>
+          </div>
+          <button class="btn secondary" type="button" data-page="homePage">返回首页</button>
+        </div>
+
+        <section class="tool-panel">
+          <div class="stat-grid">
+            <div class="stat-box"><span class="stat-number" id="statWords">0</span><span class="stat-label">练过单词</span></div>
+            <div class="stat-box"><span class="stat-number" id="statMastered">0</span><span class="stat-label">已掌握</span></div>
+            <div class="stat-box"><span class="stat-number" id="statRate">0%</span><span class="stat-label">正确率</span></div>
+            <div class="stat-box"><span class="stat-number" id="statStreak">0</span><span class="stat-label">连续天数</span></div>
+          </div>
+
+          <div class="mini-meter">
+            <label><span>掌握进度</span><span id="masteryText">0/120</span></label>
+            <div class="bar"><span id="masteryBar"></span></div>
+          </div>
+
+          <div class="practice-actions">
+            <button class="btn secondary" id="resetBtn" type="button">清空记录</button>
+          </div>
+        </section>
+
+        <div class="chart-grid">
+          <section class="chart-card">
+            <h3>历史每日复习单词数</h3>
+            <canvas id="wordsChart"></canvas>
+          </section>
+          <section class="chart-card">
+            <h3>历史每日题型练习次数</h3>
+            <canvas id="modesChart"></canvas>
+            <div class="legend" id="modeLegend"></div>
+          </section>
+        </div>
+
+        <section class="tool-panel" style="margin-top:16px">
+          <h3 class="panel-title">历史每日明细</h3>
+          <table class="daily-table">
+            <thead><tr><th>日期</th><th>去重单词</th><th>练习题数</th><th>题型</th></tr></thead>
+            <tbody id="dailyTableBody"></tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="./database.js"></script>
+  <script>
+    (() => {
+      const WORDS = window.PRIMARY_WORDS || [];
+      const UNITS = window.PRIMARY_UNITS || [];
+      const BOOKS = window.PRIMARY_BOOKS || [];
+      const PHRASES = window.PRIMARY_PHRASES || [];
+      const STORAGE_ROOT = "primary-vocab-v1";
+      const modeLabels = {
+        en_cn: "英译中",
+        cn_en: "中译英",
+        listen: "听力随机",
+        spell: "拼写小练",
+        clue: "猜词填空",
+        verb_form: "动词变形",
+        noun_plural: "名词复数",
+        number_form: "数词变形",
+        phrase_cn: "词组短语",
+        phrase_spell: "短语拼写",
+        verb_past: "动词变形"
+      };
+      const modeColors = {
+        en_cn: "#0f766e",
+        cn_en: "#2f6fca",
+        listen: "#df5a47",
+        spell: "#e7aa25",
+        clue: "#3f8f58",
+        verb_form: "#7c5cc4",
+        noun_plural: "#c2410c",
+        number_form: "#0369a1",
+        phrase_cn: "#6b7f1d",
+        phrase_spell: "#b45309",
+        verb_past: "#7c5cc4"
+      };
+      const chartModes = ["en_cn", "cn_en", "listen", "spell", "clue", "verb_form", "noun_plural", "number_form", "phrase_cn", "phrase_spell"];
+
+      const CLUES = {};
+
+      const state = {
+        selectedBooks: new Set(["g3a"]),
+        selectedUnits: new Set(["colors_numbers", "school_classroom"]),
+        mode: "en_cn",
+        pool: [],
+        index: 0,
+        answered: false,
+        sessionCorrect: 0,
+        sessionWrong: [],
+        lastPool: [],
+        reviewPool: [],
+        reviewActive: false,
+        listeningSubtype: "",
+        verbFormQueue: [],
+        currentCorrectText: "",
+        currentAcceptedAnswers: [],
+        stats: defaultStats()
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+      const PHRASE_ITEMS = PHRASES.map(phraseToItem);
+
+      function phraseTypeLabel(type) {
+        const labels = {
+          verb_phrase: "动词词组",
+          prep_phrase: "介词短语",
+          noun_phrase: "名词短语",
+          phrase: "常用表达"
+        };
+        return labels[type] || "短语";
+      }
+
+      function phraseToItem(item) {
+        return {
+          ...item,
+          word: item.phrase,
+          pos: phraseTypeLabel(item.type),
+          sec: phraseTypeLabel(item.type),
+          sentence: item.example || "",
+          isPhrase: true
+        };
+      }
+
+      function itemKey(item) {
+        return item?.word || "";
+      }
+
+      function findStudyItem(key, kind) {
+        if (kind === "phrase") return PHRASE_ITEMS.find((item) => item.word === key);
+        return WORDS.find((item) => item.word === key) || PHRASE_ITEMS.find((item) => item.word === key);
+      }
+
+      function defaultStats() {
+        return {
+          attempts: 0,
+          correct: 0,
+          sessions: 0,
+          lastStudyDate: "",
+          currentStreak: 0,
+          bestStreak: 0,
+          daily: {},
+          wordStats: {}
+        };
+      }
+
+      function normalizeName(name) {
+        const clean = String(name || "").trim();
+        return clean || "小学生";
+      }
+
+      function storageKey() {
+        return `${STORAGE_ROOT}:${normalizeName($("#learnerName").value)}`;
+      }
+
+      function loadStats() {
+        try {
+          const saved = localStorage.getItem(storageKey());
+          state.stats = saved ? { ...defaultStats(), ...JSON.parse(saved) } : defaultStats();
+          state.stats.wordStats = state.stats.wordStats || {};
+          state.stats.daily = state.stats.daily || {};
+        } catch (error) {
+          state.stats = defaultStats();
+        }
+      }
+
+      function saveStats() {
+        localStorage.setItem(storageKey(), JSON.stringify(state.stats));
+      }
+
+      function todayKey() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function touchStudyDay() {
+        const today = todayKey();
+        if (state.stats.lastStudyDate === today) return;
+
+        if (!state.stats.lastStudyDate) {
+          state.stats.currentStreak = 1;
+        } else {
+          const last = new Date(`${state.stats.lastStudyDate}T00:00:00`);
+          const now = new Date(`${today}T00:00:00`);
+          const diffDays = Math.round((now - last) / 86400000);
+          state.stats.currentStreak = diffDays === 1 ? state.stats.currentStreak + 1 : 1;
+        }
+
+        state.stats.lastStudyDate = today;
+        state.stats.bestStreak = Math.max(state.stats.bestStreak || 0, state.stats.currentStreak);
+      }
+
+      function logDailyPractice(item, isCorrect) {
+        const today = todayKey();
+        const daily = state.stats.daily || {};
+        const entry = daily[today] || { words: [], modes: {}, attempts: 0, correct: 0 };
+        const key = itemKey(item);
+        if (!entry.words.includes(key)) entry.words.push(key);
+        entry.modes[state.mode] = (entry.modes[state.mode] || 0) + 1;
+        entry.attempts += 1;
+        if (isCorrect) entry.correct += 1;
+        daily[today] = entry;
+        state.stats.daily = daily;
+      }
+
+      function saveName() {
+        const name = normalizeName($("#learnerName").value);
+        $("#learnerName").value = name;
+        localStorage.setItem(`${STORAGE_ROOT}:lastName`, name);
+        loadStats();
+        renderDashboard();
+      }
+
+      function initName() {
+        $("#learnerName").value = localStorage.getItem(`${STORAGE_ROOT}:lastName`) || "";
+        loadStats();
+      }
+
+      function showPage(pageId) {
+        $$(".page").forEach((page) => page.classList.add("hide"));
+        const page = document.getElementById(pageId);
+        if (page) page.classList.remove("hide");
+        if (pageId === "homePage") renderHome();
+        if (pageId === "wrongPage") renderWrongBook();
+        if (pageId === "dataPage") renderDataPage();
+        if (pageId === "phrasePage") renderPhrasePage();
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      function bookCount(bookId) {
+        return WORDS.filter((item) => itemInBook(item, bookId)).length;
+      }
+
+      function unitCount(unitId) {
+        return WORDS.filter((item) => item.unit === unitId).length;
+      }
+
+      function renderBooks() {
+        const list = $("#bookList");
+        list.innerHTML = "";
+
+        BOOKS.forEach((book) => {
+          const label = document.createElement("label");
+          label.className = "book-option";
+          label.innerHTML = `
+            <input type="checkbox" value="${book.id}">
+            <span>
+              <span class="book-name">${book.name}</span>
+              <span class="book-meta">${book.grade} · ${book.term}</span>
+            </span>
+            <span class="book-count">${bookCount(book.id)} 词</span>
+          `;
+
+          const checkbox = label.querySelector("input");
+          checkbox.checked = state.selectedBooks.has(book.id);
+          checkbox.addEventListener("change", () => {
+            checkbox.checked ? state.selectedBooks.add(book.id) : state.selectedBooks.delete(book.id);
+            updateSelectedSummary();
+          });
+
+          list.appendChild(label);
+        });
+      }
+
+      function renderUnits() {
+        const list = $("#unitList");
+        list.innerHTML = "";
+
+        UNITS.forEach((unit) => {
+          const label = document.createElement("label");
+          label.className = "unit-option";
+          label.dataset.color = unit.color;
+          label.innerHTML = `
+            <input type="checkbox" value="${unit.id}">
+            <span>
+              <span class="unit-name">${unit.name}</span>
+              <span class="unit-meta">${unit.group}</span>
+            </span>
+            <span class="unit-count">${unitCount(unit.id)} 词</span>
+          `;
+
+          const checkbox = label.querySelector("input");
+          checkbox.checked = state.selectedUnits.has(unit.id);
+          checkbox.addEventListener("change", () => {
+            checkbox.checked ? state.selectedUnits.add(unit.id) : state.selectedUnits.delete(unit.id);
+            updateSelectedSummary();
+          });
+
+          list.appendChild(label);
+        });
+
+        updateSelectedSummary();
+      }
+
+      function updateSelectedSummary() {
+        const selectedWords = selectedWordsPool();
+        const selectedPhrases = selectedPhrasesPool();
+        $("#selectedSummary").textContent = `已选择 ${state.selectedBooks.size} 本书、${state.selectedUnits.size} 个主题，共 ${selectedWords.length} 个词、${selectedPhrases.length} 个短语。`;
+        if (!$("#phrasePage").classList.contains("hide")) renderPhrasePage();
+      }
+
+      function selectedWordsPool() {
+        const hasBooks = state.selectedBooks.size > 0;
+        const hasUnits = state.selectedUnits.size > 0;
+        if (!hasBooks && !hasUnits) return [];
+
+        return WORDS.filter((item) => {
+          const inBook = !hasBooks || itemInAnyBook(item, state.selectedBooks);
+          const inUnit = !hasUnits || state.selectedUnits.has(item.unit);
+          return inBook && inUnit;
+        });
+      }
+
+      function selectedPhrasesPool() {
+        const hasBooks = state.selectedBooks.size > 0;
+        const hasUnits = state.selectedUnits.size > 0;
+        if (!hasBooks && !hasUnits) return [];
+
+        return PHRASE_ITEMS.filter((item) => {
+          const inBook = !hasBooks || itemInAnyBook(item, state.selectedBooks);
+          const inUnit = !hasUnits || state.selectedUnits.has(item.unit);
+          return inBook && inUnit;
+        });
+      }
+
+      function itemInBook(item, bookId) {
+        if (!bookId) return false;
+        return item.book === bookId || (Array.isArray(item.books) && item.books.includes(bookId));
+      }
+
+      function itemInAnyBook(item, bookSet) {
+        if (!bookSet || !bookSet.size) return true;
+        if (item.global) return true;
+        return Array.from(bookSet).some((bookId) => itemInBook(item, bookId));
+      }
+
+      function shuffle(items) {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function setMode(mode) {
+        state.mode = mode;
+        $("#sessionMode").textContent = modeLabels[mode] || "练习";
+      }
+
+      function hasVerbForm(item) {
+        return Boolean(item && item.word && item.forms && (item.forms.past || item.forms.third));
+      }
+
+      function hasNounForm(item) {
+        return Boolean(item && item.word && item.noun && item.plural && item.countable !== false);
+      }
+
+      function hasNumberForm(item) {
+        return Boolean(item && item.word && item.ordinal);
+      }
+
+      function regularPast(base) {
+        if (!base) return "";
+        if (base.endsWith("e")) return `${base}d`;
+        if (/[^aeiou]y$/i.test(base)) return `${base.slice(0, -1)}ied`;
+        return `${base}ed`;
+      }
+
+      function regularThird(base) {
+        if (!base) return "";
+        if (/[^aeiou]y$/i.test(base)) return `${base.slice(0, -1)}ies`;
+        if (/(s|x|z|ch|sh|o)$/i.test(base)) return `${base}es`;
+        return `${base}s`;
+      }
+
+      function regularIng(base) {
+        if (!base) return "";
+        if (base.endsWith("ie")) return `${base.slice(0, -2)}ying`;
+        if (base.endsWith("e") && !["be", "see"].includes(base)) return `${base.slice(0, -1)}ing`;
+        return `${base}ing`;
+      }
+
+      function regularPlural(singular) {
+        if (!singular || singular.includes(" ")) return "";
+        if (/[^aeiou]y$/i.test(singular)) return `${singular.slice(0, -1)}ies`;
+        if (singular.endsWith("fe")) return `${singular.slice(0, -2)}ves`;
+        if (singular.endsWith("f")) return `${singular.slice(0, -1)}ves`;
+        if (/(s|x|z|ch|sh)$/i.test(singular)) return `${singular}es`;
+        if (["tomato", "potato"].includes(singular)) return `${singular}es`;
+        return `${singular}s`;
+      }
+
+      function isSpecialVerb(item) {
+        const base = item.forms?.base || item.word;
+        const past = item.forms?.past;
+        const ing = item.forms?.presentParticiple;
+        const third = item.forms?.third;
+        return Boolean(
+          (past && past !== regularPast(base)) ||
+          (ing && ing !== regularIng(base)) ||
+          (third && third !== regularThird(base))
+        );
+      }
+
+      function isSpecialNoun(item) {
+        const singular = item.singular || item.word;
+        return Boolean(item.plural && item.plural !== regularPlural(singular));
+      }
+
+      function selectionKey(item) {
+        const kind = item?.isPhrase ? "phrase" : "word";
+        return `${kind}:${String(itemKey(item)).toLowerCase()}`;
+      }
+
+      function uniqueItems(items) {
+        const seen = new Set();
+        return items.filter((item) => {
+          const key = selectionKey(item);
+          if (!key || seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+      }
+
+      function weightedUniqueSample(items, limit, weightFn = () => 1) {
+        const candidates = uniqueItems(items).map((item) => ({
+          item,
+          weight: Math.max(1, Number(weightFn(item)) || 1)
+        }));
+        const result = [];
+
+        while (candidates.length && result.length < limit) {
+          const totalWeight = candidates.reduce((sum, candidate) => sum + candidate.weight, 0);
+          let pick = Math.random() * totalWeight;
+          let chosenIndex = 0;
+
+          for (let index = 0; index < candidates.length; index += 1) {
+            pick -= candidates[index].weight;
+            if (pick <= 0) {
+              chosenIndex = index;
+              break;
+            }
+          }
+
+          const [chosen] = candidates.splice(chosenIndex, 1);
+          result.push(chosen.item);
+        }
+
+        return result;
+      }
+
+      function verbTargetCounts(total) {
+        const pattern = ["third", "ing", "ing", "past", "past"];
+        const targets = { third: 0, ing: 0, past: 0 };
+        for (let index = 0; index < total; index += 1) {
+          targets[pattern[index % pattern.length]] += 1;
+        }
+        return targets;
+      }
+
+      function hasVerbTask(item, type) {
+        if (type === "past") return Boolean(item.forms?.past);
+        if (type === "ing") return Boolean(item.forms?.presentParticiple);
+        if (type === "third") return Boolean(item.forms?.third);
+        return false;
+      }
+
+      function verbPracticeSample(items, limit, weightFn) {
+        const unique = uniqueItems(items);
+        const total = Math.min(limit, unique.length);
+        const targets = verbTargetCounts(total);
+        const pastItems = unique.filter((item) => hasVerbTask(item, "past"));
+        const selectedPast = weightedUniqueSample(pastItems, Math.min(targets.past, pastItems.length), weightFn);
+        const selectedKeys = new Set(selectedPast.map(selectionKey));
+        const rest = unique.filter((item) => !selectedKeys.has(selectionKey(item)));
+        return shuffle([...selectedPast, ...weightedUniqueSample(rest, total - selectedPast.length, weightFn)]);
+      }
+
+      function buildVerbFormQueue(pool) {
+        const total = pool.length;
+        const targets = verbTargetCounts(total);
+        const tasks = Array(total).fill("");
+        const remaining = new Set(pool.map((_, index) => index));
+        const assignType = (type) => {
+          const candidates = shuffle([...remaining].filter((index) => hasVerbTask(pool[index], type)));
+          const count = Math.min(targets[type], candidates.length);
+          candidates.slice(0, count).forEach((index) => {
+            tasks[index] = type;
+            remaining.delete(index);
+          });
+        };
+
+        ["past", "ing", "third"].forEach(assignType);
+        [...remaining].forEach((index) => {
+          tasks[index] = ["past", "ing", "third"].find((type) => hasVerbTask(pool[index], type)) || "";
+        });
+
+        return tasks;
+      }
+
+      function startPractice(customPool) {
+        const selectedMode = document.querySelector('input[name="mode"]:checked')?.value || state.mode;
+        const basePool = customPool || (state.reviewActive ? state.reviewPool : selectedWordsPool());
+        let sourcePool = basePool;
+        let weightFn = () => 1;
+        let emptyMessage = state.reviewActive ? "现在还没有可练的错题" : "请至少选择一本书或一个主题";
+
+        if (selectedMode === "verb_form" || selectedMode === "verb_past") {
+          sourcePool = basePool.filter(hasVerbForm);
+          weightFn = (item) => (item.forms?.past ? 3 : 1) + (isSpecialVerb(item) ? 4 : 0);
+          emptyMessage = "当前范围里没有可练动词变形的词";
+        }
+        if (selectedMode === "noun_plural") {
+          sourcePool = basePool.filter(hasNounForm);
+          weightFn = (item) => {
+            if (isSpecialNoun(item)) return 5;
+            return 1;
+          };
+          emptyMessage = "当前范围里没有可练名词复数的词";
+        }
+        if (selectedMode === "number_form") {
+          sourcePool = basePool.filter(hasNumberForm);
+          emptyMessage = "当前范围里没有可练数词变形的词";
+        }
+        if (selectedMode === "phrase_cn" || selectedMode === "phrase_spell") {
+          sourcePool = customPool ? customPool.filter((item) => item.isPhrase) : (state.reviewActive ? state.reviewPool.filter((item) => item.isPhrase) : selectedPhrasesPool());
+          emptyMessage = "当前范围里没有可练的词组或短语";
+        }
+
+        if (!sourcePool.length) {
+          alert(emptyMessage);
+          return;
+        }
+
+        state.mode = selectedMode;
+        setMode(state.mode);
+        const isVerbMode = state.mode === "verb_form" || state.mode === "verb_past";
+        state.pool = isVerbMode ? verbPracticeSample(sourcePool, 40, weightFn) : weightedUniqueSample(sourcePool, 40, weightFn);
+        state.verbFormQueue = isVerbMode ? buildVerbFormQueue(state.pool) : [];
+        if (new URLSearchParams(window.location.search).has("debug")) {
+          window.__primaryVocabDebug = {
+            mode: state.mode,
+            verbTasks: [...state.verbFormQueue],
+            pool: state.pool.map((item) => ({
+              key: selectionKey(item),
+              word: item.word,
+              cn: item.cn,
+              isPhrase: Boolean(item.isPhrase)
+            }))
+          };
+        }
+        state.lastPool = [...state.pool];
+        state.index = 0;
+        state.answered = false;
+        state.sessionCorrect = 0;
+        state.sessionWrong = [];
+        state.stats.sessions += 1;
+        saveStats();
+        updateReviewBanner();
+
+        $("#emptyState").classList.add("hide");
+        $("#resultView").classList.add("hide");
+        $("#quizView").classList.remove("hide");
+        showPage("quizPage");
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        if (state.index >= state.pool.length) {
+          showResult();
+          return;
+        }
+
+        const item = state.pool[state.index];
+        state.answered = false;
+        $("#nextBtn").disabled = true;
+        $("#feedback").className = "feedback";
+        $("#feedback").textContent = "";
+        $("#optionGrid").innerHTML = "";
+        $("#spellRow").classList.add("hide");
+        $("#spellInput").value = "";
+        $("#spellInput").placeholder = "输入英文单词";
+        $("#spellInput").disabled = false;
+        $("#submitSpellBtn").disabled = false;
+        state.listeningSubtype = "";
+        state.currentCorrectText = "";
+        state.currentAcceptedAnswers = [];
+
+        const current = state.index + 1;
+        const total = state.pool.length;
+        $("#progressText").textContent = `${current}/${total}`;
+        $("#progressBar").style.width = `${Math.round((state.index / total) * 100)}%`;
+
+        if (state.mode === "en_cn") renderEnglishToChinese(item);
+        if (state.mode === "cn_en") renderChineseToEnglish(item);
+        if (state.mode === "listen") renderListening(item);
+        if (state.mode === "spell") renderSpelling(item);
+        if (state.mode === "clue") renderClueFill(item);
+        if (state.mode === "verb_form" || state.mode === "verb_past") renderVerbForm(item);
+        if (state.mode === "noun_plural") renderNounPlural(item);
+        if (state.mode === "number_form") renderNumberForm(item);
+        if (state.mode === "phrase_cn") renderPhraseChinese(item);
+        if (state.mode === "phrase_spell") renderPhraseSpelling(item);
+      }
+
+      function renderEnglishToChinese(item) {
+        $("#promptMain").className = "prompt-word";
+        $("#promptMain").textContent = item.word;
+        $("#promptSub").textContent = `${item.phonics} · ${item.pos}`;
+        $("#promptSentence").textContent = item.sentence;
+        renderOptions(item, "cn");
+      }
+
+      function renderChineseToEnglish(item) {
+        $("#promptMain").className = "prompt-cn";
+        $("#promptMain").textContent = item.cn;
+        $("#promptSub").textContent = `${item.sec} · 首字母 ${item.word[0].toUpperCase()}`;
+        $("#promptSentence").textContent = item.sentence.replace("____", "...");
+        renderOptions(item, "word");
+      }
+
+      function renderListening(item) {
+        const subtypes = ["listen_cn", "listen_en", "listen_spell"];
+        state.listeningSubtype = subtypes[Math.floor(Math.random() * subtypes.length)];
+        $("#promptMain").className = "prompt-cn";
+        $("#promptSentence").textContent = "";
+
+        if (state.listeningSubtype === "listen_cn") {
+          $("#promptMain").textContent = "听一听，选中文";
+          $("#promptSub").textContent = "根据发音选择对应的中文意思";
+          renderOptions(item, "cn");
+        }
+
+        if (state.listeningSubtype === "listen_en") {
+          $("#promptMain").textContent = "听一听，选英文";
+          $("#promptSub").textContent = "根据发音选择对应的英文单词";
+          renderOptions(item, "word");
+        }
+
+        if (state.listeningSubtype === "listen_spell") {
+          $("#promptMain").textContent = "听一听，写单词";
+          $("#promptSub").textContent = `首字母 ${item.word[0].toUpperCase()} · ${normalizeAnswer(item.word).length} 个字母`;
+          $("#spellRow").classList.remove("hide");
+          state.currentCorrectText = item.word;
+          $("#spellInput").focus();
+        }
+
+        setTimeout(() => speak(item.word), 260);
+      }
+
+      function renderSpelling(item) {
+        $("#promptMain").className = "prompt-cn";
+        $("#promptMain").textContent = item.cn;
+        $("#promptSub").textContent = `${item.sec} · 首字母 ${item.word[0].toUpperCase()} · ${normalizeAnswer(item.word).length} 个字母`;
+        $("#promptSentence").textContent = item.sentence.replace("____", "...");
+        $("#spellRow").classList.remove("hide");
+        $("#spellInput").focus();
+      }
+
+      function renderClueFill(item) {
+        $("#promptMain").className = "prompt-cn";
+        $("#promptMain").textContent = "猜词填空";
+        $("#promptSub").textContent = "读英文解释，写出对应单词";
+        $("#promptSentence").textContent = `${item.clue || CLUES[item.word] || item.sentence.replace("____", "this word")} Answer: ________`;
+        $("#spellInput").placeholder = "Answer";
+        $("#spellRow").classList.remove("hide");
+        state.currentCorrectText = item.word;
+        $("#spellInput").focus();
+      }
+
+      function renderVerbForm(item) {
+        const base = item.forms?.base || item.word;
+        const tasksByType = {};
+        if (item.forms?.past) {
+          tasksByType.past = {
+            from: base,
+            to: item.forms.past,
+            prompt: "写出这个动词的过去式",
+            sentence: `Base form: ${base}. Past tense: ________`,
+            placeholder: "过去式"
+          };
+        }
+        if (item.forms?.presentParticiple) {
+          tasksByType.ing = {
+            from: base,
+            to: item.forms.presentParticiple,
+            prompt: "写出这个动词的现在分词 / -ing 形式",
+            sentence: `Base form: ${base}. -ing form: ________`,
+            placeholder: "-ing 形式"
+          };
+        }
+        if (item.forms?.third) {
+          tasksByType.third = {
+            from: base,
+            to: item.forms.third,
+            prompt: "写出这个动词的第三人称单数形式",
+            sentence: `I ${base}. He/She ________.`,
+            placeholder: "第三人称单数"
+          };
+        }
+
+        const preferredType = state.verbFormQueue[state.index];
+        const fallbackOrder = [preferredType, "past", "ing", "third"].filter(Boolean);
+        const task = fallbackOrder.map((type) => tasksByType[type]).find(Boolean) || Object.values(tasksByType)[0];
+        $("#promptMain").className = "prompt-word";
+        $("#promptMain").textContent = task.from;
+        $("#promptSub").textContent = task.prompt;
+        $("#promptSentence").textContent = task.sentence;
+        $("#spellInput").placeholder = task.placeholder;
+        $("#spellRow").classList.remove("hide");
+        state.currentCorrectText = task.to;
+        $("#spellInput").focus();
+      }
+
+      function renderNounPlural(item) {
+        const singular = item.singular || item.word;
+        const plural = item.plural;
+        $("#promptMain").className = "prompt-word";
+        $("#promptMain").textContent = singular;
+        $("#promptSub").textContent = "写出这个名词的复数形式";
+        $("#promptSentence").textContent = `Singular: ${singular}. Plural: ________`;
+        $("#spellInput").placeholder = "复数形式";
+        $("#spellRow").classList.remove("hide");
+        state.currentCorrectText = plural;
+        $("#spellInput").focus();
+      }
+
+      function renderNumberForm(item) {
+        const cardinal = item.cardinal || item.word;
+        const ordinal = item.ordinal;
+        const askOrdinal = Math.random() < 0.5;
+        $("#promptMain").className = "prompt-word";
+        $("#promptMain").textContent = askOrdinal ? cardinal : ordinal;
+        $("#promptSub").textContent = askOrdinal ? "写出这个基数词的序数词" : "写出这个序数词的基数词";
+        $("#promptSentence").textContent = askOrdinal ? `Cardinal number: ${cardinal}. Ordinal number: ________` : `Ordinal number: ${ordinal}. Cardinal number: ________`;
+        $("#spellInput").placeholder = askOrdinal ? "序数词" : "基数词";
+        $("#spellRow").classList.remove("hide");
+        state.currentCorrectText = askOrdinal ? ordinal : cardinal;
+        $("#spellInput").focus();
+      }
+
+      function renderPhraseChinese(item) {
+        $("#promptMain").className = "prompt-word";
+        $("#promptMain").textContent = item.word;
+        $("#promptSub").textContent = `${item.pos} · ${bookLabel(item)}`;
+        $("#promptSentence").textContent = item.sentence || "";
+        renderOptions(item, "phrase_cn", PHRASE_ITEMS);
+      }
+
+      function renderPhraseSpelling(item) {
+        $("#promptMain").className = "prompt-cn";
+        $("#promptMain").textContent = item.cn;
+        $("#promptSub").textContent = `${item.pos} · ${bookLabel(item)}`;
+        $("#promptSentence").textContent = "看中文意思，写出对应英文词组或短语。";
+        $("#spellInput").placeholder = "英文短语";
+        $("#spellRow").classList.remove("hide");
+        state.currentCorrectText = item.word;
+        $("#spellInput").focus();
+      }
+
+      function bookName(bookId) {
+        return BOOKS.find((book) => book.id === bookId)?.name || "短语";
+      }
+
+      function bookLabel(item) {
+        const ids = item?.books?.length ? item.books : [item?.book].filter(Boolean);
+        if (!ids.length) return "汇总";
+        const names = ids.map(bookName).filter(Boolean);
+        return names.length > 2 ? `${names.slice(0, 2).join("、")}等` : names.join("、");
+      }
+
+      function renderVerbPast(item) {
+        renderVerbForm(item);
+      }
+
+      function optionText(item, kind) {
+        if (kind === "cn") return `${item.cn}（${item.pos}）`;
+        if (kind === "phrase_cn") return item.cn;
+        return item.word;
+      }
+
+      function renderOptions(item, kind, source = WORDS) {
+        const options = buildOptions(item, kind, source);
+        state.currentCorrectText = optionText(item, kind);
+        options.forEach((text) => {
+          const button = document.createElement("button");
+          button.className = "option-btn";
+          button.type = "button";
+          button.textContent = text;
+          button.addEventListener("click", () => {
+            const correctText = optionText(item, kind);
+            answerCurrent(text === correctText, item, button, correctText);
+          });
+          $("#optionGrid").appendChild(button);
+        });
+      }
+
+      function buildOptions(item, kind, source = WORDS) {
+        const correctText = optionText(item, kind);
+        const sameUnit = source.filter((word) => word.unit === item.unit && word.word !== item.word);
+        const others = source.filter((word) => word.unit !== item.unit && word.word !== item.word);
+        const candidates = [...shuffle(sameUnit), ...shuffle(others)];
+        const options = [correctText];
+
+        for (const candidate of candidates) {
+          const text = optionText(candidate, kind);
+          if (!options.includes(text)) options.push(text);
+          if (options.length === 4) break;
+        }
+
+        return shuffle(options);
+      }
+
+      function answerCurrent(isCorrect, item, button, correctText) {
+        if (state.answered) return;
+        state.answered = true;
+        recordAnswer(item, isCorrect);
+
+        $$(".option-btn").forEach((option) => {
+          option.disabled = true;
+          if (option.textContent === correctText) option.classList.add("correct");
+        });
+
+        if (button) button.classList.add(isCorrect ? "correct" : "wrong");
+        showFeedback(isCorrect, item);
+        $("#nextBtn").disabled = false;
+        $("#progressBar").style.width = `${Math.round(((state.index + 1) / state.pool.length) * 100)}%`;
+      }
+
+      function checkSpelling() {
+        if (state.answered) return;
+        const item = state.pool[state.index];
+        const userAnswer = normalizeAnswer($("#spellInput").value);
+        if (!userAnswer) return;
+
+        const correctAnswer = state.currentCorrectText || item.word;
+        const acceptedAnswers = [correctAnswer, ...(state.currentAcceptedAnswers || [])].map(normalizeAnswer);
+        const isCorrect = acceptedAnswers.includes(userAnswer);
+        state.answered = true;
+        $("#spellInput").disabled = true;
+        $("#submitSpellBtn").disabled = true;
+        recordAnswer(item, isCorrect);
+        showFeedback(isCorrect, item);
+        $("#nextBtn").disabled = false;
+        $("#progressBar").style.width = `${Math.round(((state.index + 1) / state.pool.length) * 100)}%`;
+      }
+
+      function normalizeAnswer(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z]/g, "");
+      }
+
+      function showFeedback(isCorrect, item) {
+        const box = $("#feedback");
+        const answer = state.currentCorrectText || item.word;
+        let answerText = answer === item.word ? `${item.word}，${item.cn}` : answer;
+        if (["verb_form", "verb_past", "noun_plural", "number_form"].includes(state.mode) && answer !== item.word) {
+          answerText = `${answer}（${item.word} 的对应形式）`;
+        }
+        if (item.isPhrase) {
+          answerText = `${item.word}：${item.cn}`;
+        }
+        box.classList.add("show", isCorrect ? "good" : "bad");
+        if (isCorrect) {
+          box.textContent = `答对了：${answerText}`;
+        } else {
+          box.textContent = `再记一次：${answerText}`;
+        }
+      }
+
+      function recordAnswer(item, isCorrect) {
+        touchStudyDay();
+        logDailyPractice(item, isCorrect);
+        const wordKey = itemKey(item);
+        const entry = state.stats.wordStats[wordKey] || {
+          unit: item.unit,
+          cn: item.cn,
+          pos: item.pos,
+          kind: item.isPhrase ? "phrase" : "word",
+          attempts: 0,
+          correct: 0,
+          mistakes: 0,
+          streak: 0,
+          lastSeen: ""
+        };
+
+        entry.attempts += 1;
+        entry.kind = item.isPhrase ? "phrase" : "word";
+        entry.cn = item.cn;
+        entry.pos = item.pos;
+        entry.unit = item.unit;
+        entry.lastSeen = todayKey();
+        state.stats.attempts += 1;
+
+        if (isCorrect) {
+          state.sessionCorrect += 1;
+          entry.correct += 1;
+          entry.streak += 1;
+          state.stats.correct += 1;
+        } else {
+          entry.mistakes += 1;
+          entry.streak = 0;
+          if (!state.sessionWrong.some((word) => word.word === item.word)) {
+            state.sessionWrong.push(item);
+          }
+        }
+
+        state.stats.wordStats[wordKey] = entry;
+        saveStats();
+        renderDashboard();
+      }
+
+      function nextQuestion() {
+        if (!state.answered) return;
+        state.index += 1;
+        renderQuestion();
+      }
+
+      function skipQuestion() {
+        if (state.answered) return;
+        const item = state.pool[state.index];
+        answerCurrent(false, item, null, state.currentCorrectText || item.word);
+      }
+
+      function speak(text) {
+        if (!("speechSynthesis" in window)) {
+          alert("这个浏览器暂时不支持朗读");
+          return;
+        }
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-US";
+        utterance.rate = 0.82;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function showResult() {
+        $("#quizView").classList.add("hide");
+        $("#resultView").classList.remove("hide");
+        const total = state.pool.length || 1;
+        const percent = Math.round((state.sessionCorrect / total) * 100);
+        $("#resultScore").textContent = `${percent}%`;
+        $("#resultCopy").textContent = `本次完成 ${total} 题，答对 ${state.sessionCorrect} 题，错词 ${state.sessionWrong.length} 个。`;
+      }
+
+      function masteryWords() {
+        return Object.values(state.stats.wordStats).filter((entry) => entry.streak >= 3);
+      }
+
+      function weakWords() {
+        return Object.entries(state.stats.wordStats)
+          .filter(([, entry]) => entry.mistakes > 0 && entry.streak < 3)
+          .map(([word, entry]) => ({ word, ...entry }))
+          .sort((a, b) => b.mistakes - a.mistakes || a.word.localeCompare(b.word));
+      }
+
+      function renderDashboard() {
+        const practiced = Object.keys(state.stats.wordStats).length;
+        const mastered = masteryWords().length;
+        const totalItems = WORDS.length + PHRASES.length;
+        const rate = state.stats.attempts ? Math.round((state.stats.correct / state.stats.attempts) * 100) : 0;
+
+        $("#statWords").textContent = practiced;
+        $("#statMastered").textContent = mastered;
+        $("#statRate").textContent = `${rate}%`;
+        $("#statStreak").textContent = state.stats.currentStreak || 0;
+        $("#masteryText").textContent = `${mastered}/${totalItems}`;
+        $("#masteryBar").style.width = `${Math.round((mastered / totalItems) * 100)}%`;
+        renderHome();
+        renderWrongBook();
+        if (!$("#dataPage").classList.contains("hide")) renderDataPage();
+        if (!$("#phrasePage").classList.contains("hide")) renderPhrasePage();
+      }
+
+      function renderHome() {
+        const today = state.stats.daily?.[todayKey()] || { words: [], attempts: 0, modes: {} };
+        const weak = weakWords();
+        const rate = state.stats.attempts ? Math.round((state.stats.correct / state.stats.attempts) * 100) : 0;
+        $("#homeTodayWords").textContent = today.words.length;
+        $("#homeTodayAttempts").textContent = today.attempts || 0;
+        $("#homeWeakCount").textContent = weak.length;
+        $("#homeStreak").textContent = state.stats.currentStreak || 0;
+        const rateBox = $("#homeRate");
+        if (rateBox) rateBox.textContent = `${rate}%`;
+      }
+
+      function renderWrongBook() {
+        const list = $("#weakList");
+        if (!list) return;
+        const query = ($("#wrongSearch")?.value || "").trim().toLowerCase();
+        const weak = weakWords().filter((item) => {
+          if (!query) return true;
+          return item.word.toLowerCase().includes(query) || item.cn.includes(query);
+        });
+        if (!weak.length) {
+          list.innerHTML = `<div class="weak-item"><span><span class="weak-word">暂无错词</span><span class="weak-cn">开始练习后会自动记录</span></span></div>`;
+          return;
+        }
+
+        list.innerHTML = weak.map((item) => `
+          <div class="weak-item">
+            <span>
+              <span class="weak-word">${item.word}</span>
+              <span class="weak-cn">${item.cn} · ${item.kind === "phrase" ? "短语" : item.pos || "单词"}</span>
+            </span>
+            <span class="mistake-count">${item.mistakes} 次</span>
+          </div>
+        `).join("");
+      }
+
+      function renderPhrasePage() {
+        const list = $("#phraseList");
+        if (!list) return;
+        const query = ($("#phraseSearch")?.value || "").trim().toLowerCase();
+        const type = $("#phraseTypeFilter")?.value || "all";
+        const pool = PHRASE_ITEMS.filter((item) => {
+          const matchesQuery = !query || item.word.toLowerCase().includes(query) || item.cn.includes(query);
+          const matchesType = type === "all" || item.type === type;
+          return matchesQuery && matchesType;
+        });
+
+        if (!pool.length) {
+          list.innerHTML = `<div class="phrase-card"><strong>暂无短语</strong><p>可以调整类型或搜索条件。</p></div>`;
+          return;
+        }
+
+        list.innerHTML = pool.map((item) => `
+          <article class="phrase-card">
+            <div class="phrase-tags">
+              <span class="phrase-tag">${phraseTypeLabel(item.type)}</span>
+              <span class="phrase-tag">${bookLabel(item)}</span>
+            </div>
+            <strong>${item.word}</strong>
+            <p>${item.cn}</p>
+            <p>${item.sentence}</p>
+          </article>
+        `).join("");
+      }
+
+      function dailyRows(limit = Infinity) {
+        const daily = state.stats.daily || {};
+        const rows = Object.keys(daily)
+          .sort()
+          .map((date) => ({ date, ...daily[date] }));
+        return Number.isFinite(limit) ? rows.slice(-limit) : rows;
+      }
+
+      function modeSummary(modes) {
+        const entries = Object.entries(modes || {}).filter(([, count]) => count > 0);
+        if (!entries.length) return "无";
+        return entries.map(([mode, count]) => `${modeLabels[mode] || mode} ${count}`).join("，");
+      }
+
+      function renderDataPage() {
+        const rows = dailyRows();
+        drawWordsChart($("#wordsChart"), rows);
+        drawModesChart($("#modesChart"), rows);
+        renderModeLegend();
+
+        const body = $("#dailyTableBody");
+        if (!body) return;
+        if (!rows.length) {
+          body.innerHTML = `<tr><td colspan="4">暂无学习记录</td></tr>`;
+          return;
+        }
+        body.innerHTML = [...rows].reverse().map((row) => `
+          <tr>
+            <td>${row.date}</td>
+            <td>${(row.words || []).length}</td>
+            <td>${row.attempts || 0}</td>
+            <td>${modeSummary(row.modes)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function drawWordsChart(canvas, rows) {
+        if (!canvas) return;
+        const values = rows.map((row) => (row.words || []).length);
+        drawSimpleBars(canvas, rows.map((row) => row.date.slice(5)), values, ["#0f766e"]);
+      }
+
+      function drawModesChart(canvas, rows) {
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        if (!rect.width) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        const ctx = canvas.getContext("2d");
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, rect.width, rect.height);
+
+        const labels = rows.map((row) => row.date.slice(5));
+        const modes = chartModes;
+        const modeCount = (row, mode) => {
+          const modesForDay = row.modes || {};
+          if (mode === "verb_form") return (modesForDay.verb_form || 0) + (modesForDay.verb_past || 0);
+          return modesForDay[mode] || 0;
+        };
+        const totals = rows.map((row) => modes.reduce((sum, mode) => sum + modeCount(row, mode), 0));
+        const max = Math.max(1, ...totals);
+        const pad = { left: 34, right: 10, top: 16, bottom: 34 };
+        const chartW = rect.width - pad.left - pad.right;
+        const chartH = rect.height - pad.top - pad.bottom;
+
+        drawChartFrame(ctx, rect, pad, max);
+        const gap = 8;
+        const barW = labels.length ? Math.max(8, (chartW - gap * (labels.length - 1)) / labels.length) : chartW;
+        rows.forEach((row, index) => {
+          const x = pad.left + index * (barW + gap);
+          let y = pad.top + chartH;
+          modes.forEach((mode) => {
+            const count = modeCount(row, mode);
+            if (!count) return;
+            const h = chartH * (count / max);
+            y -= h;
+            ctx.fillStyle = modeColors[mode] || "#94a3b8";
+            ctx.fillRect(x, y, barW, h);
+          });
+          ctx.fillStyle = "#5c6b7a";
+          ctx.font = "11px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(labels[index] || "", x + barW / 2, rect.height - 10);
+        });
+      }
+
+      function drawSimpleBars(canvas, labels, values, colors) {
+        const rect = canvas.getBoundingClientRect();
+        if (!rect.width) return;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        const ctx = canvas.getContext("2d");
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, rect.width, rect.height);
+
+        const max = Math.max(1, ...values);
+        const pad = { left: 34, right: 10, top: 16, bottom: 34 };
+        const chartW = rect.width - pad.left - pad.right;
+        const chartH = rect.height - pad.top - pad.bottom;
+        drawChartFrame(ctx, rect, pad, max);
+
+        const gap = 8;
+        const barW = labels.length ? Math.max(8, (chartW - gap * (labels.length - 1)) / labels.length) : chartW;
+        values.forEach((value, index) => {
+          const h = chartH * (value / max);
+          const x = pad.left + index * (barW + gap);
+          const y = pad.top + chartH - h;
+          ctx.fillStyle = colors[index % colors.length];
+          ctx.fillRect(x, y, barW, h);
+          ctx.fillStyle = "#17324d";
+          ctx.font = "12px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(String(value), x + barW / 2, Math.max(12, y - 5));
+          ctx.fillStyle = "#5c6b7a";
+          ctx.font = "11px sans-serif";
+          ctx.fillText(labels[index] || "", x + barW / 2, rect.height - 10);
+        });
+      }
+
+      function drawChartFrame(ctx, rect, pad, max) {
+        const chartH = rect.height - pad.top - pad.bottom;
+        ctx.strokeStyle = "#dbe4ee";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, pad.top);
+        ctx.lineTo(pad.left, pad.top + chartH);
+        ctx.lineTo(rect.width - pad.right, pad.top + chartH);
+        ctx.stroke();
+        ctx.fillStyle = "#5c6b7a";
+        ctx.font = "11px sans-serif";
+        ctx.textAlign = "right";
+        ctx.fillText(String(max), pad.left - 6, pad.top + 4);
+        ctx.fillText("0", pad.left - 6, pad.top + chartH + 4);
+      }
+
+      function renderModeLegend() {
+        const legend = $("#modeLegend");
+        if (!legend) return;
+        legend.innerHTML = chartModes.map((mode) => `
+          <span><i style="background:${modeColors[mode]}"></i>${modeLabels[mode]}</span>
+        `).join("");
+      }
+
+      function setReviewPool(pool) {
+        state.reviewPool = [...pool];
+        state.reviewActive = true;
+        updateReviewBanner();
+        showPage("setupPage");
+      }
+
+      function clearReviewPool() {
+        state.reviewPool = [];
+        state.reviewActive = false;
+        updateReviewBanner();
+      }
+
+      function updateReviewBanner() {
+        const banner = $("#reviewBanner");
+        const startBtn = $("#startBtn");
+        if (!state.reviewActive) {
+          banner.classList.add("hide");
+          startBtn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            开始练习
+          `;
+          return;
+        }
+
+        banner.classList.remove("hide");
+        $("#reviewBannerText").textContent = `已选 ${state.reviewPool.length} 个错词/短语。选择题型后，只会从这些内容里出题。`;
+        startBtn.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          开始错词练习
+        `;
+      }
+
+      function startWeakPractice() {
+        const weak = weakWords()
+          .map((item) => findStudyItem(item.word, item.kind))
+          .filter(Boolean);
+        if (!weak.length) {
+          alert("现在还没有错词");
+          return;
+        }
+        setReviewPool(weak);
+      }
+
+      function resetStats() {
+        if (!confirm("清空当前昵称的所有学习记录？")) return;
+        state.stats = defaultStats();
+        clearReviewPool();
+        saveStats();
+        renderDashboard();
+      }
+
+      function initEvents() {
+        $("#saveNameBtn").addEventListener("click", saveName);
+        $("#learnerName").addEventListener("change", saveName);
+        $("#goSetupBtn").addEventListener("click", () => showPage("setupPage"));
+        $("#goWrongBtn").addEventListener("click", () => showPage("wrongPage"));
+        $("#goDataBtn").addEventListener("click", () => showPage("dataPage"));
+        $("#goPhraseBtn").addEventListener("click", () => showPage("phrasePage"));
+        $("#quickReviewBtn").addEventListener("click", startWeakPractice);
+        $$("[data-page]").forEach((button) => {
+          button.addEventListener("click", () => showPage(button.dataset.page));
+        });
+        $("#wrongSearch").addEventListener("input", renderWrongBook);
+        $("#phraseSearch").addEventListener("input", renderPhrasePage);
+        $("#phraseTypeFilter").addEventListener("change", renderPhrasePage);
+        $("#selectAllBooksBtn").addEventListener("click", () => {
+          BOOKS.forEach((book) => state.selectedBooks.add(book.id));
+          renderBooks();
+          updateSelectedSummary();
+        });
+        $("#clearBooksBtn").addEventListener("click", () => {
+          state.selectedBooks.clear();
+          renderBooks();
+          updateSelectedSummary();
+        });
+        $("#selectAllBtn").addEventListener("click", () => {
+          UNITS.forEach((unit) => state.selectedUnits.add(unit.id));
+          renderUnits();
+        });
+        $("#clearUnitsBtn").addEventListener("click", () => {
+          state.selectedUnits.clear();
+          renderUnits();
+        });
+        $$("#modeGrid input").forEach((input) => input.addEventListener("change", () => setMode(input.value)));
+        $("#startBtn").addEventListener("click", () => startPractice());
+        $("#cancelReviewBtn").addEventListener("click", clearReviewPool);
+        $("#speakBtn").addEventListener("click", () => {
+          const item = state.pool[state.index];
+          if (item) speak(item.word);
+        });
+        $("#submitSpellBtn").addEventListener("click", checkSpelling);
+        $("#spellInput").addEventListener("keydown", (event) => {
+          if (event.key === "Enter") checkSpelling();
+        });
+        $("#nextBtn").addEventListener("click", nextQuestion);
+        $("#skipBtn").addEventListener("click", skipQuestion);
+        $("#backHomeBtn").addEventListener("click", showResult);
+        $("#againBtn").addEventListener("click", () => startPractice(state.lastPool.length ? state.lastPool : selectedWordsPool()));
+        $("#reviewMistakesBtn").addEventListener("click", () => {
+          if (state.sessionWrong.length) setReviewPool(state.sessionWrong);
+          else startWeakPractice();
+        });
+        $("#startWeakBtn").addEventListener("click", startWeakPractice);
+        $("#resetBtn").addEventListener("click", resetStats);
+      }
+
+      function init() {
+        initName();
+        renderBooks();
+        renderUnits();
+        initEvents();
+        setMode("en_cn");
+        updateReviewBanner();
+        renderDashboard();
+        showPage("homePage");
+        window.addEventListener("resize", () => {
+          if (!$("#dataPage").classList.contains("hide")) renderDataPage();
+        });
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
